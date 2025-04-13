@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useChat, suggestedQuestions } from "@/lib/chatContext";
 import { useTheme } from "@/lib/themeContext";
 import { cn } from "@/lib/utils";
+import 'boxicons';
 
 const ChatbotWidget: React.FC = () => {
   const { messages, isOpen, isLoading, sendMessage, toggleChat, closeChat } = useChat();
@@ -9,6 +10,8 @@ const ChatbotWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { theme } = useTheme();
+  
+  console.log("Chatbot Widget Rendered, isOpen:", isOpen);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -44,12 +47,17 @@ const ChatbotWidget: React.FC = () => {
     await sendMessage(question);
   };
 
+  const handleToggleChat = () => {
+    console.log("Toggle chat button clicked");
+    toggleChat();
+  };
+  
   return (
     <div className="chatbot-container fixed bottom-6 right-6 z-50">
       {/* Chat Button */}
       {!isOpen && (
         <button 
-          onClick={toggleChat}
+          onClick={handleToggleChat}
           className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-110 transition-all"
           aria-label="Open chat"
         >

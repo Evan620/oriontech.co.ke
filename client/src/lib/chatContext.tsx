@@ -39,7 +39,9 @@ const defaultChatContext: ChatContextType = {
   isLoading: false,
   addMessage: () => {},
   sendMessage: async () => {},
-  toggleChat: () => {},
+  toggleChat: () => {
+    console.log("Default toggleChat called, but this should be overridden");
+  },
   closeChat: () => {}
 };
 
@@ -57,7 +59,15 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleChat = () => setIsOpen(prev => !prev);
+  const toggleChat = () => {
+    console.log("toggleChat called in context, current isOpen:", isOpen);
+    setIsOpen(prev => {
+      const newState = !prev;
+      console.log("Setting isOpen to:", newState);
+      return newState;
+    });
+  };
+  
   const closeChat = () => setIsOpen(false);
 
   const addMessage = (content: string, sender: "user" | "bot") => {
