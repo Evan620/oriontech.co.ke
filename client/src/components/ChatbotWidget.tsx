@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from 'react-markdown';
 import 'boxicons';
 
 const ChatbotWidget: React.FC = () => {
@@ -14,9 +15,27 @@ const ChatbotWidget: React.FC = () => {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatHeight, setChatHeight] = useState("30rem"); // Default height
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  console.log("Chatbot Widget Rendered, isOpen:", isOpen);
+  // Auto-scroll to the bottom of messages
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
+  // Adjust height based on content (expanded when many messages)
+  useEffect(() => {
+    if (messages.length > 5) {
+      setChatHeight("40rem"); // Taller for more messages
+    } else if (messages.length > 2) {
+      setChatHeight("35rem"); // Medium height
+    } else {
+      setChatHeight("30rem"); // Default height
+    }
+  }, [messages.length]);
+  
   const toggleChat = () => {
     console.log("Toggle chat button clicked");
     setIsOpen(prev => !prev);
@@ -115,7 +134,7 @@ const ChatbotWidget: React.FC = () => {
       
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-80 md:w-96 h-[30rem] bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-primary/20 transition-all duration-500 scale-100">
+        <div style={{ height: chatHeight }} className="w-80 md:w-96 bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-primary/20 transition-all duration-500 scale-100">
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-primary to-secondary px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
@@ -142,12 +161,12 @@ const ChatbotWidget: React.FC = () => {
               <div 
                 key={message.id}
                 className={cn(
-                  "flex items-start max-w-[80%]",
-                  message.sender === "user" && "ml-auto justify-end"
+                  "flex items-start",
+                  message.sender === "user" ? "ml-auto justify-end max-w-[80%]" : "max-w-[90%]"
                 )}
               >
                 {message.sender === "bot" && (
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-2 flex-shrink-0">
                     <i className='bx bx-bot text-sm text-primary'></i>
                   </div>
                 )}
@@ -160,7 +179,13 @@ const ChatbotWidget: React.FC = () => {
                       : "bg-primary/20 rounded-tr-none"
                   )}
                 >
-                  <p>{message.content}</p>
+                  {message.sender === "bot" ? (
+                    <div className="prose prose-sm dark:prose-invert prose-headings:mb-2 prose-p:mb-2 prose-ul:mb-2 prose-ul:mt-0 max-w-none">
+                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p>{message.content}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -195,6 +220,7 @@ const ChatbotWidget: React.FC = () => {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
           
           {/* Chat Input */}
