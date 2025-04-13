@@ -16,17 +16,34 @@ const defaultThemeContext: ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType>(defaultThemeContext);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeType>("noir");
+  // First, try to get theme from localStorage for persistence
+  const getSavedTheme = (): ThemeType => {
+    if (typeof window === 'undefined') return "noir";
+    const savedTheme = localStorage.getItem("orion-theme") as ThemeType;
+    return (savedTheme && ["noir", "cyber", "techno"].includes(savedTheme)) 
+      ? savedTheme 
+      : "noir";
+  };
+  
+  const [theme, setTheme] = useState<ThemeType>(getSavedTheme());
 
   useEffect(() => {
-    // Remove previous theme classes
-    document.body.classList.remove("theme-noir", "theme-cyber", "theme-techno");
-    
-    // Add theme-specific class
-    document.body.classList.add(`theme-${theme}`);
+    // Apply theme to both document.documentElement and document.body for consistency
+    ["documentElement", "body"].forEach(element => {
+      const el = document[element as keyof Document] as HTMLElement;
+      // Remove previous theme classes
+      el.classList.remove("theme-noir", "theme-cyber", "theme-techno");
+      // Add theme-specific class
+      el.classList.add(`theme-${theme}`);
+    });
     
     // Add noise and transition classes
     document.body.classList.add("bg-noise", "theme-transition");
+    
+    // Save to localStorage for persistence
+    localStorage.setItem("orion-theme", theme);
+    
+    console.log("Theme applied:", theme);
   }, [theme]);
   
   const value = {

@@ -5,10 +5,21 @@ import { cn } from "@/lib/utils";
 const ThemeToggle: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
+  // This is a more direct method for changing themes
   const handleThemeChange = (newTheme: ThemeType) => {
+    console.log("Theme changing to:", newTheme);
     setTheme(newTheme);
-    document.documentElement.classList.remove("theme-noir", "theme-cyber", "theme-techno");
-    document.documentElement.classList.add(`theme-${newTheme}`);
+    
+    // Apply the theme class to both documentElement and body
+    // This ensures it's applied consistently across the entire document
+    ["documentElement", "body"].forEach(element => {
+      const el = document[element as keyof Document] as HTMLElement;
+      el.classList.remove("theme-noir", "theme-cyber", "theme-techno");
+      el.classList.add(`theme-${newTheme}`);
+    });
+    
+    // Store the theme preference in localStorage for persistence
+    localStorage.setItem("orion-theme", newTheme);
   };
 
   return (

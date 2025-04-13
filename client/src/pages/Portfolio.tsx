@@ -95,43 +95,49 @@ const Portfolio: React.FC = () => {
     }
   }, [activeFilter]);
   
+  // This effect runs only once on component load and doesn't depend on ScrollTrigger
   useEffect(() => {
-    if (!sectionRef.current) return;
+    // Initial animation of elements when component mounts
+    const animateElements = () => {
+      console.log("Animating portfolio elements");
+      
+      if (!sectionRef.current) return;
+      
+      // Make sure all elements are visible first (no opacity:0)
+      if (headingRef.current) headingRef.current.style.opacity = "1";
+      if (filtersRef.current) filtersRef.current.style.opacity = "1";
+      
+      const items = document.querySelectorAll(".portfolio-item");
+      items.forEach(item => {
+        (item as HTMLElement).style.opacity = "1";
+      });
+      
+      // Then animate them with GSAP
+      gsap.fromTo(
+        headingRef.current,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+      );
+      
+      gsap.fromTo(
+        filtersRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power2.out" }
+      );
+      
+      gsap.fromTo(
+        ".portfolio-item",
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, delay: 0.4, ease: "power2.out" }
+      );
+    };
     
-    // Animate heading
-    gsap.from(headingRef.current, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: headingRef.current,
-        start: "top 80%",
-      }
-    });
+    // Run animations immediately (don't wait for scroll)
+    setTimeout(animateElements, 100); 
     
-    // Animate filters
-    gsap.from(filtersRef.current, {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: filtersRef.current,
-        start: "top 85%",
-      }
-    });
-    
-    // Animate portfolio items
-    const items = document.querySelectorAll(".portfolio-item");
-    gsap.from(items, {
-      opacity: 0,
-      y: 30,
-      stagger: 0.1,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: gridRef.current,
-        start: "top 80%",
-      }
-    });
+    return () => {
+      // Cleanup any animations if needed
+    };
   }, []);
   
   const handleFilterChange = (category: FilterCategory) => {
