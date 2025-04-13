@@ -28,10 +28,11 @@ export const contactRequests = pgTable("contact_requests", {
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
+  service: text("service").notNull(),
   message: text("message").notNull(),
   status: text("status").default("pending"),
   createdAt: timestamp("created_at").defaultNow(),
-});;
+});
 
 // Portfolio items
 export const portfolioItems = pgTable("portfolio_items", {
@@ -64,7 +65,9 @@ export const insertContactRequestSchema = createInsertSchema(contactRequests).pi
   name: true,
   email: true,
   phone: true,
+  service: true,
   message: true,
+  status: true,
 });
 
 export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick({

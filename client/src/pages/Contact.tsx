@@ -79,16 +79,29 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Would normally send form data to API here
+      // Send form data to our API endpoint
       console.log("Sending form data:", data);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to submit form");
+      }
+      
+      const result = await response.json();
+      console.log("Form submission result:", result);
       
       // Success toast
       toast({
         title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
+        description: "We'll get back to you as soon as possible. Your request ID is: " + result.requestId,
         variant: "default"
       });
       
@@ -100,7 +113,9 @@ const Contact: React.FC = () => {
       // Error toast
       toast({
         title: "Error",
-        description: "There was a problem sending your message. Please try again.",
+        description: error instanceof Error 
+          ? error.message 
+          : "There was a problem sending your message. Please try again.",
         variant: "destructive"
       });
     } finally {
