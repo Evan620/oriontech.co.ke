@@ -175,16 +175,30 @@ const ChatbotWidget: React.FC = () => {
                   className={cn(
                     "p-3 rounded-lg",
                     message.sender === "bot" 
-                      ? "bg-card rounded-tl-none" 
+                      ? "bg-card rounded-tl-none shadow-lg" 
                       : "bg-primary/20 rounded-tr-none"
                   )}
                 >
                   {message.sender === "bot" ? (
-                    <div className="prose prose-sm dark:prose-invert prose-headings:mb-2 prose-p:mb-2 prose-ul:mb-2 prose-ul:mt-0 max-w-none">
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                    <div className="prose prose-sm dark:prose-invert prose-headings:mb-2 prose-p:mb-2 prose-ul:mb-2 prose-ul:mt-0 max-w-none text-foreground font-medium">
+                      <ReactMarkdown components={{
+                          // Increase contrast for headers in dark mode
+                          h1: ({node, ...props}) => <h1 className="text-primary font-bold" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="text-primary font-bold" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="text-primary font-bold" {...props} />,
+                          // Make text and paragraphs more visible
+                          p: ({node, ...props}) => <p className="text-foreground font-medium" {...props} />,
+                          // Make list items more visible
+                          li: ({node, ...props}) => <li className="text-foreground font-medium" {...props} />,
+                          // Keep strong elements visible with a distinct color
+                          strong: ({node, ...props}) => <strong className="text-primary font-bold" {...props} />
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
                     </div>
                   ) : (
-                    <p>{message.content}</p>
+                    <p className="text-foreground font-medium">{message.content}</p>
                   )}
                 </div>
               </div>

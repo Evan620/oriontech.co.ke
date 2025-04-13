@@ -60,24 +60,36 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
   icon 
 }) => {
   const getThemeClasses = () => {
+    // First, define background colors that match each theme's primary color
+    const themeColors = {
+      noir: "bg-[#00E5FF]/20", // Noir theme primary color with transparency
+      cyber: "bg-[#00BFA5]/20", // Cyber theme primary color with transparency
+      techno: "bg-[#00C853]/20" // Techno theme primary color with transparency
+    };
+    
+    // Then return the appropriate styling based on active state
     if (isActive) {
-      if (theme === "noir") return "bg-gray-800 border-2 border-primary";
-      if (theme === "cyber") return "bg-blue-700 border-2 border-primary";
-      if (theme === "techno") return "bg-purple-700 border-2 border-primary";
+      return `${themeColors[theme]} ring-2 ring-primary shadow-md shadow-primary/30`;
     }
-    return "";
+    
+    // Return a subdued version when not active
+    return `hover:${themeColors[theme]} bg-opacity-10 hover:bg-opacity-20`;
   };
 
   return (
     <button 
       onClick={onClick}
       className={cn(
-        "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+        "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 relative",
         getThemeClasses()
       )}
       aria-label={`Switch to ${theme} theme`}
     >
-      <i className={`bx ${icon} ${isActive ? "text-primary" : ""}`}></i>
+      {/* Active indicator - small dot */}
+      {isActive && (
+        <span className="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+      )}
+      <i className={`bx ${icon} ${isActive ? "text-primary font-bold text-lg" : "text-foreground/80 text-sm"}`}></i>
     </button>
   );
 };
