@@ -5,24 +5,30 @@ import { cn } from "@/lib/utils";
 const ThemeToggle: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
+  const handleThemeChange = (newTheme: ThemeType) => {
+    setTheme(newTheme);
+    document.documentElement.classList.remove("theme-noir", "theme-cyber", "theme-techno");
+    document.documentElement.classList.add(`theme-${newTheme}`);
+  };
+
   return (
     <div className="flex space-x-2 border border-opacity-20 border-foreground rounded-full p-1">
       <ThemeButton 
         theme="noir" 
         isActive={theme === "noir"} 
-        onClick={() => setTheme("noir")}
+        onClick={() => handleThemeChange("noir")}
         icon="bxs-moon"
       />
       <ThemeButton 
         theme="cyber" 
         isActive={theme === "cyber"} 
-        onClick={() => setTheme("cyber")}
+        onClick={() => handleThemeChange("cyber")}
         icon="bx-sun"
       />
       <ThemeButton 
         theme="techno" 
         isActive={theme === "techno"} 
-        onClick={() => setTheme("techno")}
+        onClick={() => handleThemeChange("techno")}
         icon="bx-network-chart"
       />
     </div>
@@ -42,12 +48,21 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({
   onClick, 
   icon 
 }) => {
+  const getThemeClasses = () => {
+    if (isActive) {
+      if (theme === "noir") return "bg-gray-800 border-2 border-primary";
+      if (theme === "cyber") return "bg-blue-700 border-2 border-primary";
+      if (theme === "techno") return "bg-purple-700 border-2 border-primary";
+    }
+    return "";
+  };
+
   return (
     <button 
       onClick={onClick}
       className={cn(
         "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
-        isActive && `bg-${theme === "noir" ? "noir" : theme === "cyber" ? "cyber" : "techno"}-bg border-2 border-primary`
+        getThemeClasses()
       )}
       aria-label={`Switch to ${theme} theme`}
     >
