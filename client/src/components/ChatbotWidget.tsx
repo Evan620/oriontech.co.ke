@@ -1,38 +1,87 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useChat, suggestedQuestions } from "@/lib/chatContext";
-import { useTheme } from "@/lib/themeContext";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import 'boxicons';
 
 const ChatbotWidget: React.FC = () => {
-  const { messages, isOpen, isLoading, sendMessage, toggleChat, closeChat } = useChat();
+  const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { theme } = useTheme();
+  const [messages, setMessages] = useState([
+    {
+      id: "welcome",
+      content: "👋 Hello! I'm the Orion AI assistant. How can I help you today?",
+      sender: "bot",
+      timestamp: new Date()
+    }
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
   
   console.log("Chatbot Widget Rendered, isOpen:", isOpen);
 
-  // Auto-scroll to bottom on new messages
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
+  const toggleChat = () => {
+    console.log("Toggle chat button clicked");
+    setIsOpen(prev => !prev);
+  };
+  
+  const closeChat = () => {
+    setIsOpen(false);
+  };
 
-  // Focus input when chat is opened
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 300);
+  const sendMessage = async (content: string) => {
+    if (!content.trim()) return;
+    
+    // Add user message
+    const userMessage = {
+      id: Date.now().toString(),
+      content,
+      sender: "user" as const,
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue("");
+    
+    // Set loading state
+    setIsLoading(true);
+    
+    try {
+      // Make API request to chatbot endpoint
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: content }),
+      });
+      
+      const data = await response.json();
+      
+      // Add bot response
+      const botMessage = {
+        id: (Date.now() + 1).toString(),
+        content: data.response,
+        sender: "bot" as const,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      
+      // Add error message from bot
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "Sorry, I'm having trouble processing your request. Please try again later.",
+        sender: "bot" as const,
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
-  }, [isOpen]);
+  };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     if (inputValue.trim()) {
-      await sendMessage(inputValue);
-      setInputValue("");
+      sendMessage(inputValue);
     }
   };
 
@@ -43,21 +92,20 @@ const ChatbotWidget: React.FC = () => {
     }
   };
 
-  const handleSuggestionClick = async (question: string) => {
-    await sendMessage(question);
-  };
+  // Suggested questions
+  const suggestedQuestions = [
+    "What services do you offer?",
+    "How can AI help my business?",
+    "Tell me about your software development",
+    "Book a consultation"
+  ];
 
-  const handleToggleChat = () => {
-    console.log("Toggle chat button clicked");
-    toggleChat();
-  };
-  
   return (
-    <div className="chatbot-container fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50">
       {/* Chat Button */}
       {!isOpen && (
         <button 
-          onClick={handleToggleChat}
+          onClick={toggleChat}
           className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-110 transition-all"
           aria-label="Open chat"
         >
@@ -123,8 +171,8 @@ const ChatbotWidget: React.FC = () => {
                 {suggestedQuestions.map((question, index) => (
                   <button 
                     key={index}
-                    onClick={() => handleSuggestionClick(question)}
-                    className="suggestion px-3 py-1 bg-card text-sm rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                    onClick={() => sendMessage(question)}
+                    className="px-3 py-1 bg-card text-sm rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
                   >
                     {question}
                   </button>
@@ -147,8 +195,6 @@ const ChatbotWidget: React.FC = () => {
                 </div>
               </div>
             )}
-            
-            <div ref={messagesEndRef} />
           </div>
           
           {/* Chat Input */}
@@ -159,7 +205,6 @@ const ChatbotWidget: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                ref={inputRef}
                 className="flex-grow px-4 py-2 bg-card rounded-l-lg outline-none" 
                 placeholder="Type your message..."
               />
