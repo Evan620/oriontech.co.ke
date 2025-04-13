@@ -1,0 +1,239 @@
+PROMPT TITLE:
+Create a Futuristic, AI-Powered Website for Orion
+
+BACKGROUND & BRAND OVERVIEW:
+
+Brand Name: Orion
+
+Founder: Lazarus Magwaro (include his name and vision on the “Contact” or “About” page to build credibility)
+
+Market & Services: Orion helps Kenyan businesses modernize through business automation with AI agents, software and mobile development, and management consulting. Additionally, Orion rejuvenates “cheap” websites and transforms them into attractive, modern digital experiences.
+
+OVERVIEW OF THE PROJECT:
+Design and develop a modern, immersive website that embodies futuristic aesthetics and advanced technology. The website must integrate:
+
+Fluid Morph Animations: Organic, shape-morphing animations that transition between content sections.
+
+Dynamic Interactions: Responsive microinteractions, hover effects, and animated transitions.
+
+Deep AI Integration: An AI chatbot embedded on every page for guidance on services.
+
+Unique UI Elements: Custom navbar and footer designs that break away from traditional layouts, ensuring a unique “Orion” experience.
+
+Multiple Themes: Include options such as a “Neon Noir” theme (dark backgrounds with neon highlights), a “Cyber Minimalist” theme (clean lines, subtle gradients), and a “Techno Organic” theme (fluid, nature-inspired morphing with abstract forms).
+
+TECHNICAL STACK & LIBRARIES:
+
+Frontend Framework: React or Next.js for robust, component-based structure and server-side rendering (SEO and performance focused).
+
+Animation Libraries:
+
+GSAP (GreenSock): For sequencing animations, entrance effects, microinteractions, and timeline control.
+
+Anime.js / Snap.svg: For intricate SVG morph transitions.
+
+Three.js or WebGL: For immersive, interactive canvases and particle effects.
+
+Styling: Tailwind CSS or Styled Components, with customizable theming options for the multiple themes.
+
+Backend & AI Integrations:
+
+Server: Node.js with Express or serverless functions (e.g., Vercel, AWS Lambda).
+
+Chatbot AI: Integrate an AI-powered chatbot using OpenAI’s GPT-4 API or a similar service via WebSockets/REST API for real-time conversational flows.
+
+CMS/Data Storage: Utilize a headless CMS such as Contentful or Sanity for managing content dynamically.
+
+DevOps: Implement CI/CD pipelines (e.g., GitHub Actions) and containerization (Docker).
+
+DETAILED PAGE-BY-PAGE SPECIFICATIONS & FUNCTIONALITY:
+
+1. Home (Landing) Page
+Hero Section:
+
+Design: Full-screen, immersive canvas with interactive particle systems and organic “blob” morph animations that react to cursor movement or scrolling.
+
+Text Animation: A headline that transitions between keywords (e.g., “Automation” → “Innovation” → “Transformation”) using GSAP timelines.
+
+CTAs: Bold, animated buttons featuring morphing hover effects.
+
+Themes:
+
+Neon Noir: Deep blacks with neon blue or pink highlights.
+
+Cyber Minimalist: Clean, minimal color with subtle accent animations.
+
+Techno Organic: Soft gradients and organic shapes that pulse slowly.
+
+Scrolling Effects:
+
+Parallax effects with layered backgrounds and morph transitions as the user scrolls, ensuring continuity between sections.
+
+Persistent AI Chat Widget:
+
+A custom, floating AI chat bubble (bottom-right) that expands using a fluid “morph” effect on click to reveal a full chat window.
+
+Ensure it’s accessible and available across the site.
+
+2. About Page
+Interactive Timeline & Storytelling:
+
+Use an SVG-based interactive timeline that morphs shapes as users scroll through key milestones.
+
+Include personal insights and brand history, highlighting Lazarus Magwaro’s vision.
+
+Team & Vision Display:
+
+Display team member profiles with unique hover animations (e.g., images morph from circles to abstract shapes).
+
+Integrate a “story mode” transition where the background or layout shifts fluidly as the user navigates.
+
+Theme Considerations:
+
+Incorporate design elements that align with the overall futuristic theme while allowing each section a slight, unique twist.
+
+3. Services Page
+Detailed Service Blocks:
+
+Divide services into cards or modules with distinct, animated icons and interactive infographics.
+
+Each card should include a morphing border or dynamic color shift on hover.
+
+Animated Infographics:
+
+Display process flows, performance statistics, and automation pipelines using SVG or canvas animations that morph and transform.
+
+User Interactivity:
+
+Provide dynamic transitions (e.g., fluid liquid transitions between service details) that integrate with scrolling.
+
+Themes:
+
+Adjust visual styles based on selected theme (e.g., neon outlines in Neon Noir or soft pastel transitions in Techno Organic).
+
+4. Portfolio / Case Studies Page
+Interactive Grid Layout:
+
+Create a unique, non-traditional grid (e.g., asymmetrical or “masonry” style) with morphing hover effects on each project tile.
+
+Each tile should enlarge or change shape subtly on hover.
+
+Lightbox Modal Details:
+
+Clicking on a tile opens a detailed lightbox that uses interactive diagrams, morphing progress bars, and before–after sliders.
+
+Dynamic Filters:
+
+Include animated filter controls (buttons or dropdowns) with custom morphing animations that let users sort portfolio items by category or date.
+
+Theme Flexibility:
+
+Design filter and lightbox elements that adapt their color schemes and animations based on the overall selected theme.
+
+5. Contact / Inquiry Page
+Modern, Animated Form:
+
+Build a contact form with inputs and buttons that feature morphing and fluid animations upon focus or click.
+
+Use live validation with animated feedback (e.g., green checkmarks that morph into place).
+
+Embedded AI Assistance:
+
+Integrate an AI-guidance sidebar or modal that suggests FAQs or directs users based on the input they type (especially when keywords like “automation” or “software” are detected).
+
+Dynamic Map & Directions:
+
+If applicable, include an animated SVG map that smoothly highlights your office location and morphs when hovered over.
+
+Unique Navbar & Footer:
+
+Navbar:
+
+Design a non-traditional navbar: consider a floating, circular menu or a “hidden” sidebar that expands on hover.
+
+Use custom icons and transitions that are integrated with the site’s overall morph animation scheme.
+
+Footer:
+
+Instead of a typical footer, implement an animated footer that reveals contact information (including “Lazarus Magwaro” and brand details) through layered, interactive panels.
+
+Themes:
+
+Ensure that every element (navbar, footer, form, maps) adapts to the selected theme—maintaining visual consistency across the site.
+
+6. Global AI Chat Bot Integration
+Design & UI:
+
+Develop a modular chat component that starts as an unobtrusive, futuristic icon and transforms (using a smooth morph effect) into a full-screen or modal chat interface when activated.
+
+Conversational Flow:
+
+Script diverse conversation flows that cover FAQs, service details, scheduling, and support, with context preservation across interactions.
+
+Ensure fallback mechanisms and prompt suggestions are visually engaging with microanimation cues.
+
+Technical Aspects:
+
+Utilize WebSocket or REST API for real-time AI responses.
+
+Seamlessly integrate within the site’s global architecture so that the chat component is available on every page without interfering with other animations.
+
+INSTRUCTIONS FOR THE AI AGENT TO EXECUTE THE PROMPT:
+
+Initialization & Project Setup:
+
+Set up a React/Next.js project with Tailwind CSS (or Styled Components) and install dependencies for GSAP, Anime.js, and Three.js.
+
+Configure a headless CMS and backend API endpoints for form submissions and chatbot integration.
+
+Implement Themes:
+
+Develop theme toggles or selector functions that allow seamless switching between “Neon Noir,” “Cyber Minimalist,” and “Techno Organic.”
+
+Ensure that color schemes, animations, and visual aesthetics update dynamically based on the theme.
+
+Design Page Components:
+
+Header/Navbar: Build a custom, non-standard floating or slide-out navigation menu with morph animations and unique icons.
+
+Footer: Create an interactive footer with animated panels revealing contact info and social links.
+
+Content Pages: Develop separate React components for Home, About, Services, Portfolio, and Contact.
+
+Each page should incorporate custom transitions (using GSAP timelines) and SVG morph animations that tie the overall narrative together.
+
+Global AI Chat: Integrate the chatbot as an independent component that can overlay the page. Develop its UI to morph from a small icon to a full interactive chat window.
+
+Integrate Animations:
+
+Use GSAP for sequencing and scroll-triggered animations.
+
+Implement SVG morphing using Anime.js or Snap.svg for interactive timelines, hover effects, and transitioning elements.
+
+Design background animations with Three.js for an immersive environment on key sections (e.g., homepage hero).
+
+Implement Backend & AI Integrations:
+
+Connect the chat widget to an AI service (OpenAI’s GPT-4 or a custom model) ensuring context persistence.
+
+Build secure endpoints for form data and ensure real-time responsiveness on the chatbot.
+
+Testing, Optimization, and Accessibility:
+
+Optimize animations and assets for performance (lazy loading, code splitting).
+
+Include a “reduced motion” toggle for accessibility.
+
+Ensure responsive design testing across desktops, tablets, and mobile devices.
+
+Integrate testing protocols (unit and integration tests) to validate interactive elements and backend functionality.
+
+Final Touches:
+
+Customize copy and content to reflect Orion’s brand voice. Incorporate “Lazarus Magwaro” on the Contact/About page as a signature.
+
+Validate that every page, interaction, and animation adheres to the selected theme (with fallback options if user preferences require reduced motion).
+
+OUTPUT EXPECTATION:
+A fully functional, futuristic, and immersive website for Orion that is visually distinct, technically advanced, and deeply integrated with AI. The design should stand out with its custom navigation, uniquely animated components, and an AI assistant that engages users at every step.
+
