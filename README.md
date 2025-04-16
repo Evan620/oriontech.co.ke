@@ -84,3 +84,35 @@ A modern, AI-powered website for Orion, a global technology consultancy headquar
 ## License
 
 MIT License - feel free to use this code for your own projects.
+
+
+## Screenshots
+
+Homepage + Orion AI
+
+![image](https://github.com/user-attachments/assets/5837ef90-f5aa-4ff7-acb3-cb665ca373a1)
+
+![image](https://github.com/user-attachments/assets/2a0edab8-8faf-4ef7-8b05-759c69d1daf1)
+
+
+About Orion
+
+![image](https://github.com/user-attachments/assets/08107eb7-3406-48db-b6e3-d73a88a7244c)
+
+Services page 
+
+![image](https://github.com/user-attachments/assets/95885f53-f4a4-472c-9542-5573143e35b7)
+
+Portfolio page 
+
+![image](https://github.com/user-attachments/assets/63a37788-ebbb-4605-ae5e-4036f76f9f33)
+
+Contact page
+
+![image](https://github.com/user-attachments/assets/5323bb79-dfa9-41d2-a870-f36d2cb68357)
+
+Light Themes
+![image](https://github.com/user-attachments/assets/884ad812-cff5-4cc4-9ebb-c2cc7a8d361e)
+
+
+
